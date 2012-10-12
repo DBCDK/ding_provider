@@ -145,15 +145,21 @@ class DingReservationProviderTestCase extends DingProviderTestCase {
         'pickup_branch_id' => 'grd',
         'expiry' => $expiry_str,
       ),
+      ':ill-123' => array(
+        'ding_entity_id' => ':ill-123',
+        'display_name' => 'Remote loan: The algebraist',
+        'pickup_branch_id' => 'grd',
+        'expiry' => date('Y-m-d', REQUEST_TIME + 86400),
+      ),
     );
 
     foreach ($reservations as $id => $res) {
       $this->assertTrue(isset($expected[$res->ding_entity_id]), 'Expected reservation');
       $expected_res = $expected[$res->ding_entity_id];
+
       foreach ($expected_res as $prop => $value) {
         $this->assertEqual($res->$prop, $value, 'Property ' . $prop . ' looks OK');
       }
-      //$this->assertEqual($expected_res, $res, 'Reservation looks OK.');
     }
   }
 }
