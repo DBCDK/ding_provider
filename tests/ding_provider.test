@@ -131,7 +131,7 @@ class DingReservationProviderTestCase extends DingProviderTestCase {
     ding_provider_invoke('reservation', 'create', $user, 321, 'grd', $expiry);
 
     $reservations = ding_provider_invoke('reservation', 'list', $user);
-    $this->assertEqual(sizeof($reservations), 2, 'Correct number of reservations');
+    $this->assertEqual(sizeof($reservations), 3, 'Correct number of reservations');
     $expected = array(
       ':123' => array(
         'ding_entity_id' => ':123',
