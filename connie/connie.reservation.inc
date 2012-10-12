@@ -5,6 +5,8 @@
  * Ding reservation provider example.
  */
 
+define('DING_RESERVATION_DEFAULT_INTEREST_PERIOD', 183 * 86400);
+
 /**
  *
  */
