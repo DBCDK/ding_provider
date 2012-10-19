@@ -5,6 +5,8 @@
  * Ding reservation provider example.
  */
 
+define('DING_RESERVATION_DEFAULT_INTEREST_PERIOD', 14 * 86400);
+
 /**
  *
  */
@@ -46,6 +48,7 @@ function connie_reservation_list($account) {
   }
   // Fake a remote reservation.
   $result['ill-123'] = new DingProviderReservation('ill-123', array(
+                         'ding_entity_id' => variable_get('ting_agency', '') . ':' . 'ill-123',
                          'display_name' => 'Remote loan: The algebraist',
                          'pickup_branch_id' => 'grd',
                          'expiry' => date('Y-m-d', REQUEST_TIME + 86400),
@@ -97,8 +100,7 @@ function connie_reservation_options_submit($type, $account, $reservables, $value
 /**
  *
  */
-function connie_reservation_create($account, $id, $options) {
-  $branch = $options['connie_preferred_branch'];
+function connie_reservation_create($account, $id, $branch) {
   $expiry = REQUEST_TIME + DING_RESERVATION_DEFAULT_INTEREST_PERIOD;
   // Throw exception if we're not logged in.
   ding_user_get_creds($account);
