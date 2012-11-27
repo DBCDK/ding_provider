@@ -433,7 +433,7 @@ function ding_provider_ajax_form_callback() {
   return array(
     '#type' => 'ajax',
     '#commands' => array(
-      ajax_command_alert(t("Internal error. Please contact the site administrator if the problem persists.")),
+      ajax_command_alert(t('Internal error. Please contact the site administrator if the problem persists.', array(), array('context' => 'ding_provider'))),
     ),
   );
 }
@@ -445,7 +445,7 @@ function _ding_provider_message_reset($messages) {
   if (is_array($messages)) {
     foreach ($messages as $type => $message_list) {
       foreach ($message_list as $message) {
-        drupal_set_message($message, $type, FALSE);
+        drupal_set_message(t($message, array(), array('context' => 'ding_provider')), $type, FALSE);
       }
     }
   }
