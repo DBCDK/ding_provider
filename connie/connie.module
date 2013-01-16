@@ -69,6 +69,7 @@ function connie_profile2_presave($profile) {
       // profile has just been updated with data from the backend and
       // is being saved locally.
       !isset($profile->connie_init) &&
+      isset($profile->connie_preferred_branch) &&
       // Check that there's actually changed something.
       $profile->connie_preferred_branch != $profile->original->connie_preferred_branch) {
     $langs = field_language('profile2', $profile);
