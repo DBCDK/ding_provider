@@ -475,7 +475,7 @@ function ding_provider_get_destination($query_args = array()) {
  * */
 function ding_provider_get_provider_module_name($type) {
   $providers = _ding_provider_get_provider();
-  return $providers[$type]['module'];
+  return isset($providers[$type]['module']) ? $providers[$type]['module'] : NULL;
 }
 
 /**
