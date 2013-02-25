@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Implements a common interface to backend providers.
@@ -9,9 +10,9 @@
  */
 function ding_provider_requirements($phase) {
   $requirements = array();
-  $t            = get_t();
-  $providers    = array();
-  $conflicting  = FALSE;
+  $t = get_t();
+  $providers = array();
+  $conflicting = FALSE;
 
   // Check if we have conflicting provider types
   foreach (module_implements('ding_provider') as $module) {
@@ -27,9 +28,9 @@ function ding_provider_requirements($phase) {
     if (count($providermodules) > 1) {
       $conflicting[] = t('%type implemented by @providers. Using @module.', array(
         '@providers' => implode(', ', $providermodules),
-        '%type'      => $providertype,
-        '@module'    => end($providermodules),
-      )
+        '%type' => $providertype,
+        '@module' => end($providermodules),
+          )
       );
     }
   }
@@ -38,18 +39,18 @@ function ding_provider_requirements($phase) {
     case 'runtime':
       if ($callback = variable_get('ding_provider_ajax_disabled', FALSE)) {
         $requirements['ding_provider_ajax_conflict'] = array(
-          'title'       => $t('Ding provider AJAX authentication'),
+          'title' => $t('Ding provider AJAX authentication'),
           'description' => $t('Disabled'),
-          'severity'    => REQUIREMENT_ERROR,
-          'value'       => t('Ding Provider is unable to override the system/ajax page, because some other module already has overridden it with %callback.', array('%callback' => $callback)),
+          'severity' => REQUIREMENT_ERROR,
+          'value' => t('Ding Provider is unable to override the system/ajax page, because some other module already has overridden it with %callback.', array('%callback' => $callback)),
         );
       }
       if ($conflicting == TRUE) {
         $requirements['ding_provider_conflict'] = array(
-          'title'       => $t('Ding provider Information'),
+          'title' => $t('Ding provider Information'),
           'description' => $t('Possible provider conflict'),
-          'severity'    => REQUIREMENT_WARNING,
-          'value'       => implode('<br />', $conflicting),
+          'severity' => REQUIREMENT_WARNING,
+          'value' => implode('<br />', $conflicting),
         );
       }
       break;
@@ -189,8 +190,7 @@ function ding_provider_error_page() {
 function ding_provider_implements($type, $hook) {
   try {
     return (bool) _ding_provider_function($type, $hook, TRUE);
-  }
-  catch (Exception $e) {
+  } catch (Exception $e) {
     return FALSE;
   }
 }
@@ -251,8 +251,7 @@ function ding_provider_invoke_page($type, $hook) {
     if ($function) {
       return call_user_func_array($function, $args);
     }
-  }
-  catch (Exception $e) {
+  } catch (Exception $e) {
     if ($e instanceof DingProviderUserException) {
       // Rethrow user exceptions.
       throw $e;
@@ -329,8 +328,7 @@ function ding_provider_build_form($form_id, &$form_state) {
       drupal_redirect_form($form_state);
     }
     return $form;
-  }
-  catch (Exception $e) {
+  } catch (Exception $e) {
     if ($e instanceof DingProviderUserException) {
       // Rethrow user exceptions.
       throw $e;
@@ -403,8 +401,7 @@ function ding_provider_ajax_form_callback() {
       $x = $callback($form, $form_state);
       return $x;
     }
-  }
-  catch (Exception $e) {
+  } catch (Exception $e) {
     if ($e instanceof DingProviderUserException) {
       // Rethrow user exceptions.
       throw $e;
@@ -475,10 +472,10 @@ function ding_provider_get_destination($query_args = array()) {
 /**
  * Get the provider type
  * @param type, the type of module e.g reservation, availibility etc.
- **/
+ * */
 function ding_provider_get_provider_module_name($type) {
-$providers = _ding_provider_get_provider();
-return $providers[$type]['module'];
+  $providers = _ding_provider_get_provider();
+  return isset($providers[$type]['module']) ? $providers[$type]['module'] : NULL;
 }
 
 /**
