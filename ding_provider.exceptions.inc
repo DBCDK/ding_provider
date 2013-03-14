@@ -21,6 +21,13 @@ class DingProviderNoProvider extends Exception {}
  */
 class DingProviderDoesntImplement extends Exception {}
 
+
+/**
+ * Thrown when cache_ding_user_credentials is timed out.
+ */
+class DingProviderTimeoutException extends Exception {}
+
+
 /**
  * Exception class that can provide a translated and substituted
  * message. Exceptions that is instanceof DingProviderUserException is
