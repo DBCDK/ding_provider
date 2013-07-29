@@ -64,16 +64,15 @@ function connie_user_is_authenticated($creds) {
  *
  * Update email and/or pincode for user.
  *
- * @param $account User object.
- * @param $changes
- *   An array with 'mail' and/or 'pass' keys.
- * @returns
- *   An array, optionally with new 'creds' which will be cached.
+ * @param $account Array.
+ * @param $changes array with 'mail' and/or 'pass' keys.
+ * @throws Exception
+ * @return array, optionally with new 'creds' which will be cached.
  */
 function connie_user_account_update($account, $changes) {
   $result = array();
   $creds = ding_user_get_creds($account);
-  $res = connie_client_invoke('update_userinfo', $creds['name'], $creds['pass'], $changes);
+  $res = ding_provider_invoke('update_userinfo', $creds['name'], $creds['pass'], $changes);
   if ($res !== TRUE) {
     // Call failed, throw exception.
     if (is_string($res)) {
@@ -93,7 +92,7 @@ function connie_user_account_update($account, $changes) {
     $result['creds'] = $creds;
 
     // Update user status cache.
-    _connie_user_status($creds, TRUE);
+    //_connie_user_status($creds, TRUE); //_connie_user_status is undefined!
   }
   return $result;
 }
