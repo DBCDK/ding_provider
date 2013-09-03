@@ -5,7 +5,6 @@
  * tests as the real providers.
  */
 
-/* US1083-test
 class ConnieUserProviderImplementationTestCase extends DingUserProviderImplementationTestCase {
   public static function getInfo() {
     return array(
@@ -25,7 +24,7 @@ class ConnieUserProviderImplementationTestCase extends DingUserProviderImplement
     return array('Twain', 'wain');
   }
 }
-*/
+
 
 class ConnieAvailabilityProviderImplementationTestCase extends DingAvailabilityProviderImplementationTestCase {
   public static function getInfo() {
@@ -53,7 +52,7 @@ class ConnieAvailabilityProviderImplementationTestCase extends DingAvailabilityP
   }
 }
 
-/* US1083-test
+
 class ConnieReservationProviderImplementationTestCase extends DingReservationProviderImplementationTestCase {
   public static function getInfo() {
     return array(
@@ -90,9 +89,8 @@ class ConnieReservationProviderImplementationTestCase extends DingReservationPro
     );
   }
 }
-*/
 
-/* US1083-test
+
 class ConnieLoanProviderImplementationTestCase extends DingLoanProviderImplementationTestCase {
   public static function getInfo() {
     return array(
@@ -115,7 +113,6 @@ class ConnieLoanProviderImplementationTestCase extends DingLoanProviderImplement
     return $user;
   }
 }
-*/
 
 class ConnieBranchProviderImplementationTestCase extends DingBranchProviderImplementationTestCase {
   public static function getInfo() {
