@@ -5,6 +5,7 @@
  * tests as the real providers.
  */
 
+/* US1083-test
 class ConnieUserProviderImplementationTestCase extends DingUserProviderImplementationTestCase {
   public static function getInfo() {
     return array(
@@ -26,6 +27,7 @@ class ConnieUserProviderImplementationTestCase extends DingUserProviderImplement
     return array('Twain', 'wain');
   }
 }
+*/
 
 class ConnieAvailabilityProviderImplementationTestCase extends DingAvailabilityProviderImplementationTestCase {
   public static function getInfo() {
