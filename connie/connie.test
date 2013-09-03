@@ -19,10 +19,8 @@ class ConnieUserProviderImplementationTestCase extends DingUserProviderImplement
     parent::setup(array('connie'));
   }
 
-  /**
-   * Returns name and password for a user that's supposed to be able to log
-   * in. Used by parent class.
-   */
+  // Returns name and password for a user that's supposed to be able to log in.
+  // Used by parent class.
   function getGoodUser() {
     return array('Twain', 'wain');
   }
@@ -55,6 +53,7 @@ class ConnieAvailabilityProviderImplementationTestCase extends DingAvailabilityP
   }
 }
 
+/* US1083-test
 class ConnieReservationProviderImplementationTestCase extends DingReservationProviderImplementationTestCase {
   public static function getInfo() {
     return array(
@@ -91,7 +90,9 @@ class ConnieReservationProviderImplementationTestCase extends DingReservationPro
     );
   }
 }
+*/
 
+/* US1083-test
 class ConnieLoanProviderImplementationTestCase extends DingLoanProviderImplementationTestCase {
   public static function getInfo() {
     return array(
@@ -114,6 +115,7 @@ class ConnieLoanProviderImplementationTestCase extends DingLoanProviderImplement
     return $user;
   }
 }
+*/
 
 class ConnieBranchProviderImplementationTestCase extends DingBranchProviderImplementationTestCase {
   public static function getInfo() {
