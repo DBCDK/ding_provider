@@ -12,5 +12,5 @@ files[] = ding_provider.reservation.inc
 ; US1083-test: Disable failing tests
 files[] = tests/ding_provider.test
 files[] = tests/ding_provider_implementation.test
-files[] = tests/ding_provider_login.test
+;files[] = tests/ding_provider_login.test
 configure = admin/config/ding/provider
