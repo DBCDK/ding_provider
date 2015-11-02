@@ -1,6 +1,6 @@
 name = Ding provider
 description = Implements a common interface to backend providers.
-package = Ding!
+package = Provider
 version = 7.x-0.13+dbc.9
 core = 7.x
 ;dependencies[] = ding_base
