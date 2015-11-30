@@ -103,27 +103,6 @@ function ding_provider_menu() {
   return $items;
 }
 
-/**
- * Implements hook_menu_alter().
- */
-function ding_provider_menu_alter(&$items) {
-  // Override system/ajax with a version that caches
-  // DingProviderAuthException.
-  $callback = $items['system/ajax']['page callback'];
-  if ($callback == 'ajax_form_callback') {
-    $items['system/ajax']['page callback'] = 'ding_provider_ajax_form_callback';
-    $items['system/ajax']['file path'] = drupal_get_path('module', 'ding_provider');
-    $items['system/ajax']['file'] = 'ding_provider.module';
-    // Delete var, but only if it is set.
-    if (variable_get('ding_provider_ajax_disabled', NULL)) {
-      variable_del('ding_provider_ajax_disabled');
-    }
-  }
-  else {
-    // Set a variable for hook_requirements.
-    variable_set('ding_provider_ajax_disabled', $callback);
-  }
-}
 
 /**
  * Implements hook_permission().
@@ -348,91 +327,6 @@ function ding_provider_build_form($form_id, &$form_state) {
     // Redirect to error page.
     drupal_goto('ding_provider_error');
   }
-}
-
-/**
- * Replacement for ajax_form_callback() that handles authentication.
- *
- * Sends a log in AJAX command (implemented in ding_user), which will resubmit
- * the AJAX request on successful submission.
- *
- * @see ding_provider_invoke()
- * @see ding_provider_invoke_page()
- * @see ding_provider_get_form()
- */
-function ding_provider_ajax_form_callback() {
-  global $user;
-  $messages = NULL;
-  try {
-    if (isset($_REQUEST['dp_form_id']) && !empty($_REQUEST['dp_form_id'])) {
-      $form_id = (string) $_REQUEST['dp_form_id'];
-      // Load saved submission.
-      if ($cached = cache_get('ding_provider_' . $form_id, 'cache_form')) {
-        $form_state['input'] = $cached->data;
-        $messages = $form_state['input']['#ding_provider_messages'];
-        $orig_user = $form_state['input']['#ding_provider_user'];
-        unset($form_state['input']['#ding_provider_messages']);
-        unset($form_state['input']['#ding_provider_user']);
-        cache_clear_all('ding_provider_' . $form_id, 'cache_form');
-      }
-    }
-
-    // If the user changed (likely because they just logged in),
-    // things get complicated as ajax_get_form wont find the cached
-    // form. So we reset the user momentarily.
-    if (isset($orig_user) && $user->uid != $orig_user->uid) {
-      $new_user = $user;
-      $user = $orig_user;
-    }
-    list($form, $form_state, $form_id) = ajax_get_form();
-    if (isset($new_user)) {
-      $user = $new_user;
-    }
-
-    drupal_process_form($form['#form_id'], $form, $form_state);
-
-    // Set any messages we saved.
-    _ding_provider_message_reset($messages);
-
-    if (!empty($form_state['triggering_element'])) {
-      $callback = $form_state['triggering_element']['#ajax']['callback'];
-    }
-    if (!empty($callback) && function_exists($callback)) {
-      $x = $callback($form, $form_state);
-      return $x;
-    }
-  } catch (Exception $e) {
-    if ($e instanceof DingProviderUserException) {
-      // Rethrow user exceptions.
-      throw $e;
-    }
-    elseif ($e instanceof DingProviderAuthException || $e instanceof EntityMalformedException) {
-      if (module_exists('ding_user')) {
-        // Something needs auth, save state and redirect to authentication page.
-        $expire = 21600;
-        $input = $form_state['method'] == 'get' ? $_GET : $_POST;
-        $input['#ding_provider_messages'] = drupal_get_messages();
-        $input['#ding_provider_user'] = $user;
-        cache_set('ding_provider_' . $form_id, $input, 'cache_form', REQUEST_TIME + $expire);
-        $options = array('query' => array('dp_form_id' => $form_id) + ding_provider_get_destination());
-
-        return array(
-          '#type' => 'ajax',
-          '#commands' => array(
-            ajax_command_ding_user_authenticate(array('dp_form_id' => $form_id))
-          ),
-        );
-      }
-    }
-  }
-
-  // Else show internal error.
-  return array(
-    '#type' => 'ajax',
-    '#commands' => array(
-      ajax_command_alert(t('Internal error. Please contact the site administrator if the problem persists.', array(), array('context' => 'ding_provider'))),
-    ),
-  );
 }
 
 /**

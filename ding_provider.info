@@ -1,16 +1,16 @@
 name = Ding provider
 description = Implements a common interface to backend providers.
-package = Ding!
-version = 7.x-0.13+dbc.9
+package = Provider
+version = 7.x-0.13+dbc.10
 core = 7.x
-dependencies[] = ding_base
-files[] = ding_provider.module
-files[] = ding_provider.debt.inc
+;dependencies[] = ding_base
+;files[] = ding_provider.module
+;files[] = ding_provider.debt.inc
 files[] = ding_provider.exceptions.inc
-files[] = ding_provider.loan.inc
-files[] = ding_provider.reservation.inc
+;files[] = ding_provider.loan.inc
+;files[] = ding_provider.reservation.inc
 ; US1083-test: Disable failing tests
-; files[] = tests/ding_provider.test
-; files[] = tests/ding_provider_implementation.test
-; files[] = tests/ding_provider_login.test
+files[] = tests/ding_provider.test
+;files[] = tests/ding_provider_implementation.test
+;files[] = tests/ding_provider_login.test
 configure = admin/config/ding/provider
