@@ -27,32 +27,17 @@
 #       Test depth
 #       One or more of: quick, full, all. Default: [all].
 
-selenium :
-# - name : <test suite>
-#   path :
-#     Path to file, if different from default path, and named different than <test suite>.py
-#     Default path: test/selenium/<test suite>.py
 simpletest :
 # DrupalUnitTestCase and DrupalWebTestCase
+- name : DingProviderTestCase
+  path : tests/ding_provider.test
+# - name : DingProviderImplementationTestCase
+#   path : tests/ding_provider_implementation.test
+# - name : DingProviderLoginTestCase
+#   path : tests/ding_provider_login.test
 # - name : <test suite>
 #   path :
 #     Path to file, if different from default path, and named different than <test suite>.test
 #     Default path: test/simpletest/<test suite>.test
 #   workflow :
 #     NB: 'all' test use standard Drupal test API: drush test-run --all (at least to begin with)
-phpunit :
-# - name : <test suite>
-#   path :
-#     Default path: test/phpunit/<test suite>
-syntax :
-# - name : <test suite>
-#   path :
-#     Default path: test/syntax/<test suite>
-manual :
-# - name : <test suite>
-#   path :
-#     Default path: test/manual/<test suite>
-other :
-# - name : <test suite>
-#   path :
-#     Default path: test/other/<test suite>
